@@ -5,23 +5,23 @@ import generateToken from "../utils/generateToken.js";
 export const register = async(req, res)=>{
     const {name, email, password, address, phone}= req.body;
 
-    const userExists = Users.findOne({email})
+    const userExists =await Users.findOne({email})
     if (userExists) {
         res.status(400).json({message:'user already exists'})
     }
-    else{
+    else{ 
         const user = Users.create({
             name, email, password, address, phone
         })
     
         if (user) {
             res.status(201).json({
-               _id:user._id,
-               name:user.name,
-               email:user.email,
-               password:user.password,
-               phone:user.phone,
-               address:user.address,
+               _id: user._id,
+               name: user.name,
+               email: user.email,
+               password: user.password,
+               phone: user.phone,
+               address: user.address,
                token:generateToken(user._id)
     
             })
