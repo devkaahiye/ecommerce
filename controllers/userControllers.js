@@ -9,25 +9,29 @@ export const register = async(req, res)=>{
     if (userExists) {
         res.status(400).json({message:'user already exists'})
     }
-
-    const user = Users.create({
-        name, email, password, address, phone
-    })
-
-    if (user) {
-        res.status(201).json({
-           _id:user._id,
-           name:user.name,
-           email:user.email,
-           password:user.password,
-           phone:user.phone,
-           address:user.address,
-           token:generateToken(user._id)
-
+    else{
+        const user = Users.create({
+            name, email, password, address, phone
         })
-        
-    }else{
+    
+        if (user) {
+            res.status(201).json({
+               _id:user._id,
+               name:user.name,
+               email:user.email,
+               password:user.password,
+               phone:user.phone,
+               address:user.address,
+               token:generateToken(user._id)
+    
+            })
+    }
+    else{
         res.status(401).json({message:'Invalid User Data'});
+    }
+
+    
+        
     }
 }
 
