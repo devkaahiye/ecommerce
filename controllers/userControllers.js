@@ -59,6 +59,34 @@ export const login =async(req, res)=>{
 }
 
 
+export const getUserProfile = async(req, res) =>{
+
+    const {token} = req.body;
+
+    const user = Users.findById(req.params.id);
+
+    if (user) {
+        res.status(200).json({
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            password:user.password,
+            phone:user.phone,
+            address:user.address,
+            token
+ 
+         })
+    }else{
+        res.status(404).json({message:'User not found'});
+    }
+        
+    }
+
+
+
+
+
+
 
 // Authentication
 // Authorization
