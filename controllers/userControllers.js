@@ -59,12 +59,12 @@ export const login =async(req, res)=>{
 }
 
 
-export const getUserProfile = async(req, res) =>{
 
-    const {token} = req.body;
+export const getUserProfile = async(req, res)=>{
 
-    const user = Users.findById(req.params.id);
+    const {id, token} = req.body;
 
+    const user = await Users.findById(id);
     if (user) {
         res.status(200).json({
             _id:user._id,
@@ -76,11 +76,16 @@ export const getUserProfile = async(req, res) =>{
             token
  
          })
-    }else{
-        res.status(404).json({message:'User not found'});
-    }
         
     }
+    else{
+        res.status(404).json({message:'Invalid Data'});
+    }
+
+}
+
+
+
 
 
 
