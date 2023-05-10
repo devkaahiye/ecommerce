@@ -50,6 +50,7 @@ export const login =async(req, res)=>{
             password:user.password,
             phone:user.phone,
             address:user.address,
+            isAdmin:user.isAdmin,
             token:generateToken(user._id)
  
          })
@@ -73,6 +74,7 @@ export const getUserProfile = async(req, res)=>{
             password:user.password,
             phone:user.phone,
             address:user.address,
+            isAdmin:user.isAdmin,
             token
  
          })
