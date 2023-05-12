@@ -11,11 +11,11 @@ export const createProduct = async(req, res) =>{
     );
 
     if (product) {
-        res.statusCode(201).json(product)
+        res.status(201).json(product)
         
     }
     else{
-        res.statusCode(500).json({message: 'Product Not Created'})
+        res.status(500).json({message: 'Product Not Created'})
     }
 
 }
@@ -35,13 +35,13 @@ export const updateProduct =async (req, res)  => {
         
     }
     else{
-        res.statusCode(404).json({message: 'Product Not found'})
+        res.status(404).json({message: 'Product Not found'})
     }
 
     const updatedProduct = await product.save();
 
     if (updatedProduct) {
-        res.statusCode(201).json(updatedProduct)
+        res.status(201).json(updatedProduct)
         
     }
     
@@ -55,7 +55,7 @@ export const deleteProduct = async (req, res)=>{
 
     const product = await Product.findByIdAndDelete(req.parmas.id)
     if (product) {
-        res.statusCode(200).json({message:'Product deleted'})
+        res.status(200).json({message:'Product deleted'})
         
     }
 }
