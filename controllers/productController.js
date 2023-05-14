@@ -37,7 +37,7 @@ export const updateProduct = async (req, res) => {
     const { name, category, image, description, price, countinStock } =
       req.body;
 
-    const product = await Product.findById(req.parmas.id);
+    const product = await Product.findById(req.params.id);
 
     if (product) {
       product.name = name;
