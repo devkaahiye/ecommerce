@@ -1,57 +1,83 @@
 import Product from "../models/productModel.js";
 
-export const createProduct = async (req, res) => {
-  try {
-    const { name, category, image, description, price, countInStock } =
-      req.body;
 
-      let product = new Product({
-      name,
-      category,
-      image,
-      description,
-      price,
-      countInStock,
-    });
+export const getProducts = async (req, res)=>{
+    try {
+        const products = await Product();
+    res.json(products)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
 
-    product = await product.save();
+
+export const createProduct = async(req, res) =>{
+   try {
+    const {name, category, image, description, price, countInStock} = req.body;
+
+    const product = await Product.create(
+        {
+            name, category, image, description, price,  
+        }
+    );
 
     if (product) {
-      res.status(201).json(product);
-    } else {
-      res.status(500).json({ message: "Product Not Created" });
+        res.status(201).json(product)
+        
     }
-  } catch (e) {
-    res.status(500).json(e);
+    else{
+        res.status(400).json({message: 'Product Not Created'})
+    }
+   } catch (error) {
+    res.status(500).json({error: error.message})
+   }
+
+}
+
+export const updateProduct =async (req, res)  => {
+   try {
+    const {name, category, image, description, price, countinStock} = req.body;
+
+    const product = await Product.findById(req.parmas.id)
+
+    if (product) {
+        product.name =name
+        product.category =category
+        product.image =image
+        product.description =description
+        product.price =price
+        product.countinStock =countinStock
+        
+    }
+    else{
+        res.status(404).json({message: 'Product Not found'})
+    }
+
+    const updatedProduct = await product.save();
+
+    if (updatedProduct) {
+        res.status(201).json(updatedProduct)
+        
+    }
+    
+   } catch (error) {
+    res.status(500).json({error: error.message})
+   }
+
+
+}
+
+
+
+export const deleteProduct = async (req, res)=>{
+
+  try {
+    const product = await Product.findByIdAndDelete(req.parmas.id)
+    if (product) {
+        res.status(200).json({message:'Product deleted'})
+        
+    }
+  } catch (error) {
+    res.status(500).json({error: error.message})
   }
-};
-
-export const updateProduct = async (req, res) => {
-  const { name, category, image, description, price, countinStock } = req.body;
-
-  const product = await Product.findById(req.parmas.id);
-
-  if (product) {
-    product.name = name;
-    product.category = category;
-    product.image = image;
-    product.description = description;
-    product.price = price;
-    product.countinStock = countinStock;
-  } else {
-    res.status(404).json({ message: "Product Not found" });
-  }
-
-  const updatedProduct = await product.save();
-
-  if (updatedProduct) {
-    res.status(201).json(updatedProduct);
-  }
-};
-
-export const deleteProduct = async (req, res) => {
-  const product = await Product.findByIdAndDelete(req.parmas.id);
-  if (product) {
-    res.status(200).json({ message: "Product deleted" });
-  }
-};
+}

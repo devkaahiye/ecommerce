@@ -3,6 +3,7 @@ import generateToken from "../utils/generateToken.js";
 
 
 export const register = async(req, res)=>{
+   try {
     const {name, email, password, address, phone}= req.body;
 
     const userExists =await Users.findOne({email})
@@ -33,10 +34,14 @@ export const register = async(req, res)=>{
     
         
     }
+   } catch (error) {
+    res.status(500).json({error: error.message})
+   }
 }
 
 
 export const login =async(req, res)=>{
+  try {
     const {email, password} = req.body;
 
 
@@ -57,12 +62,16 @@ export const login =async(req, res)=>{
     }else{
         res.status(404).json({message:'Invalid Email or Password'});
     }
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
 }
 
 
 
 export const getUserProfile = async(req, res)=>{
 
+   try {
     const {id, token} = req.body;
 
     const user = await Users.findById(id);
@@ -84,6 +93,9 @@ export const getUserProfile = async(req, res)=>{
         res.status(404).json({message:'Invalid Data'});
     }
 
+   } catch (error) {
+    res.status(500).json({error: error.message})
+   }
 }
 
 
