@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import Users from "../models/userModel.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -66,6 +67,78 @@ export const deleteProduct = async (req, res) => {
     if (product) {
       res.status(200).json({ message: "Product deleted" });
     }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const addToCart = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+
+    const product = await Product.findById(productId);
+    const user = await Users.findById(userId);
+
+    if (user.cart.length == 0) {
+      user.cart.push({ product, quatity: 1 });
+    } else {
+      isProductFound = false;
+      for (let i = 0; i < user.cart.length; i++) {
+        if (user.cart[i].product._id.equals(product.id)) {
+          isProductFound = true;
+        }
+      }
+
+      if (isProductFound) {
+        let producttt = user.cart.find((pro) =>
+          pro.product._id.equals(product._id)
+        );
+
+        producttt.quatity += 1;
+      } else {
+        user.cart.push({ product, quatity: 1 });
+      }
+    }
+
+    user = await user.save();
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+
+
+export const addToWishlist = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+
+    const product = await Product.findById(productId);
+    const user = await Users.findById(userId);
+
+    if (user.wishlist.length == 0) {
+      user.wishlist.push({ product });
+    } else {
+      isProductFound = false;
+      for (let i = 0; i < user.wishlist.length; i++) {
+        if (user.wishlistwishlist[i].product._id.equals(product.id)) {
+          isProductFound = true;
+        }
+      }
+
+      if (isProductFound) {
+        res.status(400).json({message: "Already added"})
+      } else {
+        user.wishlist.push({ product });
+      }
+    }
+
+    user = await user.save();
+
+    res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
