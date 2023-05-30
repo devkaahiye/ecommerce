@@ -84,7 +84,9 @@ export const getUserProfile = async(req, res)=>{
             phone:user.phone,
             address:user.address,
             isAdmin:user.isAdmin,
-            token
+            token,
+            cart:user.cart,
+            wishlist:user.wishlist
  
          })
         
