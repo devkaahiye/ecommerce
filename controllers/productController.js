@@ -124,7 +124,7 @@ export const addToWishlist = async (req, res) => {
     } else {
       isProductFound = false;
       for (let i = 0; i < user.wishlist.length; i++) {
-        if (user.wishlistwishlist[i].product._id.equals(product.id)) {
+        if (user.wishlist[i].product._id.equals(product.id)) {
           isProductFound = true;
         }
       }
