@@ -80,7 +80,7 @@ export const addToCart = async (req, res) => {
     const user = await Users.findById(userId).populate('cart.product').populate('wishlist.product');
 
     if (user.cart.length == 0) {
-      user.cart.push({ product, quatity: 1 });
+      user.cart.push({ product, quantity: 1 });
     } else {
       isProductFound = false;
       for (let i = 0; i < user.cart.length; i++) {
@@ -94,9 +94,9 @@ export const addToCart = async (req, res) => {
           pro.product._id.equals(product._id)
         );
 
-        producttt.quatity += 1;
+        producttt.quantity += 1;
       } else {
-        user.cart.push({ product, quatity: 1 });
+        user.cart.push({ product, quantity: 1 });
       }
     }
 
