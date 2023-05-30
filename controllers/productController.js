@@ -82,7 +82,7 @@ export const addToCart = async (req, res) => {
     if (user.cart.length == 0) {
       user.cart.push({ product, quantity: 1 });
     } else {
-      isProductFound = false;
+      let isProductFound = false;
       for (let i = 0; i < user.cart.length; i++) {
         if (user.cart[i].product._id.equals(product.id)) {
           isProductFound = true;
