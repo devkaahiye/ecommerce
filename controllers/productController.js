@@ -77,7 +77,8 @@ export const addToCart = async (req, res) => {
     const { userId, productId } = req.body;
 
     const product = await Product.findById(productId);
-    const user = await Users.findById(userId);
+    const user = await Users.findById(userId).populate("cart.product")
+    .populate("wishlist.product");
 
     if (user.cart.length == 0) {
       user.cart.push({ product, quatity: 1 });
@@ -117,7 +118,8 @@ export const addToWishlist = async (req, res) => {
     const { userId, productId } = req.body;
 
     const product = await Product.findById(productId);
-    const user = await Users.findById(userId);
+    const user = await Users.findById(userId).populate("cart.product")
+    .populate("wishlist.product");
 
     if (user.wishlist.length == 0) {
       user.wishlist.push({ product });
