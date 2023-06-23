@@ -74,7 +74,7 @@ export const getUserProfile = async(req, res)=>{
    try {
     const {id, token} = req.body;
 
-    const user = await Users.findById(id);
+    const user = await Users.findById(id).populate('cart.product').populate('wishlist.product');
     if (user) {
         res.status(200).json({
             _id:user._id,
