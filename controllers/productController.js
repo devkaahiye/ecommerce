@@ -77,7 +77,7 @@ export const addToCart = async (req, res) => {
     const { userId, productId } = req.body;
 
     const product = await Product.findById(productId);
-    const user = await Users.findById(userId).populate('cart.product').populate('wishlist.product');
+    let user = await Users.findById(userId).populate('cart.product').populate('wishlist.product');
 
     if (user.cart.length == 0) {
       user.cart.push({ product, quantity: 1 });
@@ -117,7 +117,7 @@ export const addToWishlist = async (req, res) => {
     const { userId, productId } = req.body;
 
     const product = await Product.findById(productId);
-    const user = await Users.findById(userId)
+    let user = await Users.findById(userId)
     .populate('cart.product').populate('wishlist.product');
 
     if (user.wishlist.length == 0) {
@@ -144,3 +144,97 @@ export const addToWishlist = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export const removeCartItem = async (req, res) => {
+//   try {
+//     const { userId,id } = req.params;
+//     const product = await Product.findById(id);
+//     let user = await Users.findById(userId)
+//       .populate("cart.product")
+//       .populate("wishlist.product");
+
+//     for (let i = 0; i < user.cart.length; i++) {
+//       if (user.cart[i].product._id.equals(product._id)) {
+//         if (user.cart[i].quantity == 1) {
+//           user.cart.splice(i, 1);
+//         } else {
+//           user.cart[i].quantity -= 1;
+//         }
+//       }
+//     }
+//     user = await user.save();
+//     res.json(user);
+//   } catch (e) {
+//     res.status(500).json({ error: e.message });
+//   }
+// };
+
+
+// export const deleteCartItem = async (req, res) => {
+//   try {
+//     const { userId,index } = req.body;
+//     let user = await Users.findById(userId)
+//       .populate("cart.product")
+//       .populate("wishlist.product");
+
+   
+//     user.cart.splice(index, 1);
+    
+//     user = await user.save();
+//     res.json(user);
+//   } catch (e) {
+//     res.status(500).json({ error: e.message });
+//   }
+// };
