@@ -146,6 +146,50 @@ export const addToWishlist = async (req, res) => {
 };
 
 
+export const removeCartItem = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+
+    const product = await Product.findById(productId);
+    let user = await Users.findById(userId)
+    .populate('cart.product').populate('wishlist.product');
+
+
+    for (let i = 0; i < user.cart.length; i++) {
+      if (user.cart[i].product._id.equals(product.id)) {
+        if (user.cart[i].quantity == 1) {
+          user.cart.splice(i, 1)
+          
+        }else{
+          user.cart[i].quantity -= 1;
+        }
+      }
+    }
+
+    user = await user.save();
+    res.json(user)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+
+}
+
+
+
+export const deleteCartItem = async (req, res) => {
+  try {
+    const { userId, index } = req.body;
+    let user = await Users.findById(userId)
+    .populate('cart.product').populate('wishlist.product');
+
+    user.cart.splice(index, 1)
+    user = await user.save();
+    res.json(user)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
 
 
 
