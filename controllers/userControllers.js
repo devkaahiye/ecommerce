@@ -56,6 +56,8 @@ export const login =async(req, res)=>{
             phone:user.phone,
             address:user.address,
             isAdmin:user.isAdmin,
+            cart:user.cart,
+            wishlist:user.wishlist,
             token:generateToken(user._id)
  
          })
