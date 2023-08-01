@@ -42,11 +42,11 @@ const orderSchema = mongoose.Schema({
     },
     paidAt:{
         type:Number,
-        required:true,
+        
     },
     deliveredAt:{
         type:Number,
-        required:true,
+       
     },
     
     
