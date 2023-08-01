@@ -41,7 +41,6 @@ export const addOrderItems = async (req, res) => {
                 deliveryPrice,
                 totalPrice,
                 status:0,
-                orderedAt: new Date().getTime()
             }
         )
 
@@ -61,7 +60,6 @@ export const addOrderItems = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).json({ error: error.message });
     }
 
 }
