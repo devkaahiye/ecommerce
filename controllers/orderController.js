@@ -11,7 +11,7 @@ export const addOrderItems = async (req, res) => {
 
         for (let index = 0; index < productsList.length; index++) {
 
-            const product = await Product.findById(productsList[index]._id);
+            let product = await Product.findById(productsList[index]._id);
             if (product) {
                 if (product.countInStock >= productsList[index].quantity) {
                     product.countInStock -= productsList[index].quantity
@@ -32,7 +32,7 @@ export const addOrderItems = async (req, res) => {
         }
 
 
-        const order = new Orders(
+        let order = new Orders(
             {
                 user:userid,
                 products,
@@ -48,7 +48,7 @@ export const addOrderItems = async (req, res) => {
 
         order = await order.save()
         if (order) {
-            const user = await Users.findById(userid)
+            let user = await Users.findById(userid)
             if (user) {
                 user.cart = []
 
