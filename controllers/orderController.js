@@ -6,7 +6,7 @@ import Users from "../models/userModel.js";
 export const getAllOrders = async (req, res)=> {
 
     try {
-        const orders = await Orders.find().populate("products.product");
+        const orders = await Orders.find().populate("products.product").populate("user");
 
         res.json(orders)
     } catch (error) {
