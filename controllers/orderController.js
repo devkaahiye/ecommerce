@@ -3,35 +3,28 @@ import Product from "../models/productModel.js";
 import Users from "../models/userModel.js";
 
 
-export const getAllOrders = async (req, res)=> {
-
+export const getAllOrders = async (req, res)=>{
     try {
-        const orders = await Orders.find().populate("products.product").populate("user");
+        const orders = await Orders.find();
 
-        res.json(orders)
+    res.json(orders)
     } catch (error) {
         res.status(500).json({ error: error.message }); 
     }
-
-
-
-
 }
 
-export const getRecentOrders = async (req, res)=> {
-
+export const getRecentOrders = async (req, res)=>{
     try {
-        const orders = await Orders.find().populate("products.product");
+        const orders = await Orders.find().limit(30);
 
-        res.json(orders)
+    res.json(orders)
     } catch (error) {
         res.status(500).json({ error: error.message }); 
     }
-
-
-
-
 }
+
+
+
 
 export const addOrderItems = async (req, res) => {
 
