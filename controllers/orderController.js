@@ -5,7 +5,7 @@ import Users from "../models/userModel.js";
 
 export const getAllOrders = async (req, res)=>{
     try {
-        const orders = await Orders.find();
+        const orders = await Orders.find().populate('user').populate('products.product');
 
     res.json(orders)
     } catch (error) {
@@ -15,7 +15,7 @@ export const getAllOrders = async (req, res)=>{
 
 export const getRecentOrders = async (req, res)=>{
     try {
-        const orders = await Orders.find().limit(30);
+        const orders = await Orders.find().limit(30).populate('user').populate('products.product');
 
     res.json(orders)
     } catch (error) {
