@@ -26,7 +26,7 @@ export const getRecentOrders = async (req, res)=>{
 
 export const getMyOrders = async (req, res)=>{
     try {
-        const orders = await Orders.find(req.params.id).populate('user').populate('products.product');
+        const orders = await Orders.find({user:req.params.id}).populate('user').populate('products.product');
 
     res.json(orders)
     } catch (error) {
